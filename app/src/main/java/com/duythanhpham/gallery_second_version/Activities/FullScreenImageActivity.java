@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -21,7 +23,6 @@ public class FullScreenImageActivity extends AppCompatActivity implements IFullS
     // region Constants
     public static final String KEY_IMAGE_LIST = "KEY_IMAGE_LIST";
     public static final String KEY_POSITION = "KEY_POSITION";
-    public static final Integer numOfColumns = 3;
     // endregion
 
     private ViewPager viewPager;
@@ -41,6 +42,8 @@ public class FullScreenImageActivity extends AppCompatActivity implements IFullS
 
         viewPager = findViewById(R.id.vp);
 
+        getSupportActionBar().setTitle("FullScreenImageActivity");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -51,6 +54,39 @@ public class FullScreenImageActivity extends AppCompatActivity implements IFullS
         }
 
         SetUpViewPager();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_fullscreen_image, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_Info:
+
+                break;
+            case R.id.menu_Delete:
+
+                break;
+            case R.id.menu_Edit:
+
+                break;
+            case R.id.menu_Rotate:
+                // fullScreenImageAction.RotateImage(this, );
+                //xử lý xoay ảnh
+                break;
+            case R.id.menu_CropImage:
+
+                //xử lý crop ảnh
+            case R.id.menu_SetWallpaper:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -92,6 +128,12 @@ public class FullScreenImageActivity extends AppCompatActivity implements IFullS
         }
     };
     // endregion
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     private void removeListeners() {
         viewPager.removeOnPageChangeListener(viewPagerOnPageChangeListener);

@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -35,7 +36,6 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        //super.destroyItem(container, position, object);
         container.removeView((View) object);
     }
 
@@ -49,13 +49,20 @@ public class FullScreenImageAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         //LayoutInflater inflater = (LayoutInflater) container.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //View view = inflater.inflate(R.layout.fullscreen_image_layout, null);
-       View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fullscreen_image_layout, container, false);
+        View view = LayoutInflater.from(container.getContext()).inflate(R.layout.fullscreen_image_layout, container, false);
 
-        ImageView imageView = view.findViewById(R.id.fullscreen_image);
+        final ImageView imageView = view.findViewById(R.id.fullscreen_image);
         final LinearLayout linearLayout = view.findViewById(R.id.ll);
+        Button btnRotate = view.findViewById(R.id.RotateButton);
+        btnRotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageView.setRotation(imageView.getRotation() + 90);
+            }
+        });
 
         Integer imageID = images.get(position).getImage_ID();
-        Context context = imageView.getContext();
+        //Context context = imageView.getContext();
         int ScreenWidth = DisplayScreenUtility.getScreenWidth(context);
         iFullScreenImageLoader.LoadFullScreenImage(imageView, imageID, ScreenWidth, linearLayout);
 
